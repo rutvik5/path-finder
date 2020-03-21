@@ -1,5 +1,5 @@
 import heapq
-import collections
+import random
 
 def main():
 	n = 5
@@ -16,13 +16,18 @@ class Point:
 		self.col = col
 		self.val = 0
 
+		if random.randint(1, 10) < 4:
+			self.val = -1
+
 class FindPath:
 	def __init__(self, n):
 		self.grid = self.build_grid(n)
 		self.start = self.grid[0][0]
 		self.end = self.grid[-1][-1]
+		
 		self.set_heuristic_val()
-		self.init_start()
+		self.init_std_points()
+		
 		self.openset = []
 		self.closedset = set()
 		self.came_from = {}
@@ -35,10 +40,12 @@ class FindPath:
 			for col in range(len(self.grid[0])):
 				self.grid[row][col].h = (row - len(self.grid))**2 + (col - len(self.grid[0]))**2
 
-	def init_start(self):
+	def init_std_points(self):
 		self.start.val = 1
 		self.start.g = 0
 		self.start.f = self.start.h
+
+		self.end.val = 1
 
 	def print_path(self):
 		curr = self.end
@@ -68,7 +75,7 @@ class FindPath:
 				x = point.row + nei[0]
 				y = point.col + nei[1]
 
-				if x >= 0 and x < len(self.grid) and y >= 0 and y < len(self.grid[0]):
+				if x >= 0 and x < len(self.grid) and y >= 0 and y < len(self.grid[0]) and self.grid[x][y].val != -1:
 					tmp_g = point.g + self.dist(point, self.grid[x][y])
 					# if the dist from start to nei via curr_point is less, update values
 					if tmp_g < self.grid[x][y].g:
