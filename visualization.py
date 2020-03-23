@@ -15,7 +15,7 @@ class Point:
 		self.val = 0
 		# adds obstacles at random points with a certain prob
 		# sets the value of every obstacle to -1
-		if random.randint(1, 10) < 3:
+		if random.randint(1, 10) < 4:
 			self.val = -1
 	# colors the point with the given rgb values
 	def show(self, r,g,b):

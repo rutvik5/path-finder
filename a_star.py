@@ -4,7 +4,10 @@ import random
 def main():
 	n = 5
 	p = FindPath(n)
+	print('Start')
 	p.print_grid()
+	print()
+	print('Output')
 	p.a_star()
 
 class Point:
@@ -16,22 +19,30 @@ class Point:
 		self.col = col
 		self.val = 0
 		# adds obstacles at random points with a certain prob
+		# sets the value of every obstacle to -1
 		if random.randint(1, 10) < 3:
 			self.val = -1
 
 class FindPath:
 	def __init__(self, n):
+		# builds the grid and initializes it with Points
 		self.grid = self.build_grid(n)
+
+		# initializes start and end points
 		self.start = self.grid[0][0]
 		self.end = self.grid[-1][-1]
 		
+		# sets heuristic values for all points on the grid
 		self.set_heuristic_val()
+		# initializes start and end points
 		self.init_std_points()
-		
+		# min-heap that includes all points to be processed
 		self.openset = []
+		# includes points that are finished to be processed
 		self.closedset = set()
+		# maintains the path from start to end
 		self.came_from = {}
-
+		#add start point in the min_heap 
 		heapq.heappush(self.openset, (self.start.f, 0, 0))	
 
 	def set_heuristic_val(self):
@@ -41,18 +52,20 @@ class FindPath:
 				self.grid[row][col].h = (row - len(self.grid))**2 + (col - len(self.grid[0]))**2
 
 	def init_std_points(self):
-		self.start.val = 1
+		# initializes g and f values for start
 		self.start.g = 0
 		self.start.f = self.start.h
 
+		# overrides value for start and end to not be an obstacle
+		self.start.val = 1
 		self.end.val = 1
 
 	def print_path(self):
+		# prints final path from end to start
 		curr = self.end
 		while curr in self.came_from:
 			curr.val = 1
 			curr = self.came_from[curr]
-		print()
 		self.print_grid()
 	
 	def a_star(self):
@@ -63,6 +76,7 @@ class FindPath:
 			# base-condition when point == end
 			if point == self.end:
 				self.print_path()
+				print()
 				print('Done!')
 				return
 
@@ -99,6 +113,7 @@ class FindPath:
 			print()
 
 	def build_grid(self,n):
+		# builds a n * n - grid matrix with the given dimension
 		grid = [[Point(row, col) for col in range(n)] for row in range(n)]
 		return grid
 
