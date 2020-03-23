@@ -15,8 +15,8 @@ class Point:
 		self.row = row
 		self.col = col
 		self.val = 0
-
-		if random.randint(1, 10) < 4:
+		# adds obstacles at random points with a certain prob
+		if random.randint(1, 10) < 3:
 			self.val = -1
 
 class FindPath:
