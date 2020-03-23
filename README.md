@@ -1,6 +1,6 @@
 # A* path finding algorithm
 
-The repo contains a visualization of the A* algorithm using p5 library written in Python. The default problem includes a n*n grid where an agent has to travel from top-left to bottom right (This can be changed by updating the values for start, end). The contents of this repo are as follows:
+The repo contains a visualization of the A* algorithm using p5 library written in Python. The default problem includes a n*n grid where an agent has to travel from top-left to bottom right (Destination can be changed by updating the values for end). The contents of this repo are as follows:
 
 - a_star.py : CLI version on A* algorithm. Contains n*n grid with following values
   - 0: available path
